@@ -13,15 +13,15 @@
 1. 要件を確定させる
 2. DB構成（ER図）を確定させる
 3. BEロジックを確定させる
-4. 懸念点をつぶす（CoinGeckoの通信を確認する）
+4. BE: CoinGeckoの通信を確認する
 5. 
 
 
 # 要件
 ## 何をするアプリか？
-1. 現在の持ち日本円、持ちBTCが表示出来る
-2. Buy（Yen → Crypto） or Sell（Crypto → Yen） が出来る
-3. 現在の損益がわかる
+1. 現在の持ち日本円、持ちBTCが出来る（Portfolio）
+2. Buy（Yen → Crypto） or Sell（Crypto → Yen） が出来る（Deal）
+3. 現在の損益（Position）が表示出来る
 
 ## 整理
 1. 現在の持ち日本円、持ちBTCが出来る（Portfolio）
@@ -40,7 +40,7 @@
   ### BE
   - 
 
-3. 現在の損益（Position）がわかる
+3. 現在の損益（Position）が表示出来る
   ### FE
   - 最初は非表示
   - <button>Visible</button>で表示
@@ -62,5 +62,5 @@
 
 2. users
 - id（Unique and Serial）（Primary）
-- jpy_balance（初期値として1000000）
-- 
+- jpy_balance（初期値として1000000をseed）
+- created_at（取引時のタイムスタンプ（CoinGeckoの記載に揃える））
