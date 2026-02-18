@@ -3,6 +3,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const knex = require('knex')(require('./knexfile').development);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,7 +16,7 @@ app.use(cors({
   credentials: true
 }));
 
-// ルートのエンドポイント
+// ルートエンドポイント
 app.get('/', (req, res) => {
   res.json({ message: 'Hello Root' });
 });
@@ -38,6 +39,48 @@ app.get('/api/price/:coin_id', async (req, res) => {
   } catch (error) {
     res.status(500);
     res.json({ error: 'Failed to fetch price from CoinGecko' });
+  }
+});
+
+// Portfolio: ユーザーの残高を取得（CoinGeckoAPIは不使用）
+app.get('/api/portfolio', async (req, res) => {
+  try {
+    // 1. ユーザー情報を取得（初期残高）
+    const user = await knex('users').where({ id: 1 }).first();
+    // デバッグ
+    console.log('User:', user);
+
+    // 2. 取引履歴を取得
+    const transactions = await knex('transactions').where({ user_id: 1 });
+    // デバッグ
+    console.log('Transactions:', transactions);
+
+    // 3. 残高計算ロジック
+    let jpyBalance = parseFloat(user.initial_jpy_balance);
+    let btcBalance = 0;
+
+    transactions.forEach(transaction => {
+      const qty = parseFloat(transaction.qty);
+      const price = parseFloat(transaction.price);
+      
+      if (transaction.side === 'buy') {
+        jpyBalance -= qty * price; 
+        btcBalance += qty;
+      } else if (transaction.side === 'sell') {
+        jpyBalance += qty * price; 
+        btcBalance -= qty;
+      }
+    });
+
+    // 4. レスポンス返却
+    res.json({
+      jpyBalance: jpyBalance,
+      btcBalance: btcBalance,
+    });
+
+  } catch (error) {
+    res.status(500);
+    res.json({ error: 'Failed to fetch portfolio', details: error.message });
   }
 });
 

@@ -4,10 +4,27 @@ import './App.css'
 function App() {
   // 1. 状態管理
   const [isPositionVisible, setIsPositionVisible] = useState(false);
-  // const [message, setMessage] = useState('Loading...');
-  // const [data, setData] = useState(null);
+  const [portfolio, setPortfolio] = useState(null);
+
+  // 2. イベントハンドラー
   
-  // 2. 副作用処理
+
+  // 3. 副作用処理
+  useEffect(() => {
+      const fetchPortfolio = async () => {
+        try {
+          const res = await fetch('/api/portfolio');
+          const data = await res.json();
+          // // デバッグ
+          // console.log('Fetched portfolio:', data);
+          setPortfolio(data);
+        } catch (error) {
+          console.error('Error fetching portfolio:', error);
+        }
+      };
+      fetchPortfolio();
+  }, [])
+
   // /api/testエンドポイントからデータを取得
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -43,17 +60,20 @@ function App() {
   // }, []);
 
 
-  // 3. 返り値構築
+  // 4. 返り値構築
   return (
     <>
       <h1>Crypto Simulator</h1>
       <div>
         <h2>Portfolio</h2>
-        <div>
-          <p>JPY Balance: 1,000,000</p>
-          <p>BTC Balance: 0.00000000</p>
-          <p>Total Value: 1,000,000 JPY</p>
-        </div>
+        {portfolio ? (
+          <div>
+            <p>JPY Balance: ¥ {portfolio.jpyBalance}</p>
+            <p>BTC Balance: BTC {portfolio.btcBalance}</p>
+          </div>
+        ) : (
+          <p>Loading portfolio...</p>
+        )}
       </div>
 
       <div>

@@ -12,19 +12,23 @@
 - UIライブラリ：Mantine　（仮）
 
 # 開発手法
+## Day1
 1. 要件を確定する✅
 2. DB構成（ER図）を確定する✅
 3. BE: ロジックを確定する✅
 4. DB: DBを作成する✅
     - Migrationファイルの作成
     - Seedファイルの作成
+## Day2
 5. FE-BE: Server-Client通信を確認する✅
 6. FE-BE: APIのハードコーディング脱却✅
-    - FE-BE: vite.config.jsを使って、開発用のプロキシを設定する
+    - FE-BE: vite.config.jsを使って、開発用のプロキシを設定する ←見直し
 7. BE: CoinGeckoの通信を確認する（一旦）✅
 8. FE: 画面イメージを確定する（一旦）✅
 9. FE: 画面を作成する（一旦）✅
-10. FE-BE-DB: FEに表示するDataをBE, DBから所得する（一旦）
+10. FE-BE-DB: Portfolio: FEに表示するDataをBE, DBから所得する（一旦）✅
+## Day3
+11. キャッシュ用のSchema増やす
 
 > （一旦）は繰り返す
 
@@ -98,7 +102,6 @@ FB: 外部サービスの使用回数や使用量は抑えるのが基本！！
         <div>
           <p>JPY Balance: 1,000,000</p>
           <p>BTC Balance: 0.00000000</p>
-          <p>Total Value: 1,000,000 JPY</p>
         </div>
       </div>
 
@@ -123,5 +126,25 @@ FB: 外部サービスの使用回数や使用量は抑えるのが基本！！
       </div>
     </>
 
+# FE-BE-DB: 
+## Portfolio
+1. FE: 初回レンダリング
+1. BE: DBからGETメソッドで表示
+1. BE: 残高計算ロジックを使用して、transactionsとusersの値を計算
+1. BE: 値を返す
+1. FE: 表示
+
+## Deal
+1. FE: ユーザーが数量を入力してBuy/Sellボタンをクリック
+1. FE: POSTメソッドでサーバーに取引データを送信
+1. BE: バリデーションを使用して、残高チェック
+1. BE: CoinGecko APIで現在価格を取得
+1. BE: DBにtransactionレコードを挿入
+1. BE: 成功レスポンスを返す
+1. FE: Portfolioを再取得して表示を更新
+
+## 
+
 # Utils
 - [GitHub Prefix](https://qiita.com/a_ya_ka/items/c472a02051d78e4c0855)
+- [CoinGecko error](https://docs.coingecko.com/docs/common-errors-rate-limit)
