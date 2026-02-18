@@ -9,7 +9,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('http://localhost:3000/api/test');
+        // ハードコーディング回避のため、相対パスのAPIエンドポイントに修正
+        // vite.config.jsでproxy設定し、相対パスでAPIエンドポイントを呼び出す
+        const res = await fetch('/api/test');
         const data = await res.json();
         setMessage(data.message);
       } catch (error) {

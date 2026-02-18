@@ -16,13 +16,15 @@
 1. 要件を確定する✅
 2. DB構成（ER図）を確定する✅
 3. BE: ロジックを確定する✅
-4. DB: DBを作成する
-  - Migrationファイルの作成✅
-  - Seedファイルの作成✅
-5. FE-BE: Server-Client通信を確認する
-6. BE: CoinGeckoの通信を確認する（一旦）
-7. FE: 画面イメージを確定する（一旦）
-8. FE: 画面を作成する（一旦）
+4. DB: DBを作成する✅
+  - Migrationファイルの作成
+  - Seedファイルの作成
+5. FE-BE: Server-Client通信を確認する✅
+6. FE-BE: APIのハードコーディング脱却✅
+  - FE-BE: vite.config.jsを使って、開発用のプロキシを設定する
+7. BE: CoinGeckoの通信を確認する（一旦）
+8. FE: 画面イメージを確定する（一旦）
+9. FE: 画面を作成する（一旦）
 
 > （一旦）は繰り返す
 
