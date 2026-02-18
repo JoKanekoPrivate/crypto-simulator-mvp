@@ -8,7 +8,6 @@
 - テスト：vitest, react-testing-library　（仮）
 - 外部API：CoinGecko（https://docs.coingecko.com/）　（仮）
   - 参考: 公式: https://docs.coingecko.com/v3.0.1/reference/endpoint-overview?utm_source=chatgpt.com
-
 - グラフ: Recharts（https://recharts.github.io/）　（仮）
 - UIライブラリ：Mantine　（仮）
 
@@ -21,7 +20,7 @@
   - Seedファイルの作成
 5. FE-BE: Server-Client通信を確認する✅
 6. FE-BE: APIのハードコーディング脱却✅
-  - FE-BE: vite.config.jsを使って、開発用のプロキシを設定する
+  - FE-BE: vite.config.jsを使って、開発用のプロキシを設定する✅
 7. BE: CoinGeckoの通信を確認する（一旦）
 8. FE: 画面イメージを確定する（一旦）
 9. FE: 画面を作成する（一旦）
@@ -61,7 +60,7 @@
   - 
 
 # DB構成
-外部サービスの使用回数や使用量は抑えるのが基本！！
+FB: 外部サービスの使用回数や使用量は抑えるのが基本！！
 
 ## DB_NAME: crypto_simulator_mvp
 1. Schema(transactons)
@@ -89,3 +88,6 @@
 ## バリデーション
 - Buy: 日本円残高 >= 購入金額
 - Sell: BTC保有量 >= 売却数量
+
+# Utils
+- [GitHub Prefix](https://qiita.com/a_ya_ka/items/c472a02051d78e4c0855)
