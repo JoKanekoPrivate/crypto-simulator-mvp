@@ -1,12 +1,14 @@
 # crypto-simulator-mvp
 
 # 構成
-- フロントサイド：React, JavaScript
+- フロントサイド：React, JavaScript, Vite
 - サーバー：Express
 - データベース：Postgres / Knex
 - デプロイ：Render
 - テスト：vitest, react-testing-library　（仮）
 - 外部API：CoinGecko（https://docs.coingecko.com/）　（仮）
+  - 参考: 公式: https://docs.coingecko.com/v3.0.1/reference/endpoint-overview?utm_source=chatgpt.com
+
 - グラフ: Recharts（https://recharts.github.io/）　（仮）
 - UIライブラリ：Mantine　（仮）
 
