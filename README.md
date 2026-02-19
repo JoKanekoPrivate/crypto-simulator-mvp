@@ -6,7 +6,7 @@
 - データベース：Postgres / Knex
 - デプロイ：Render
 - テスト：vitest, react-testing-library　（仮）
-- 外部API：CoinGecko（https://docs.coingecko.com/）　（仮）
+- 外部API：CoinGecko（https://docs.coingecko.com/）
   - 参考: 公式: https://docs.coingecko.com/v3.0.1/reference/endpoint-overview?utm_source=chatgpt.com
 - グラフ: Recharts（https://recharts.github.io/）　（仮）
 - UIライブラリ：Mantine　（仮）
@@ -36,10 +36,11 @@
 12. FE-BE-DB: Position:  FEに表示するDataをBE, DB, APIから所得する⭐️✅
 13. DB: キャッシュ用のSchemaを増やす？（要検討）🎁
 14. CSS手をつける⭐️
+    - 別ブランチで試す
     - Mantineを使用
 
 ### Day4
-14. Renderにデプロイ
+14. Renderにデプロイ🌀
 15. FE-BE-DB: Deal: バリデーション実装🎁
     - Option1: traansactionsテーブルに残高を追加、Dealの度に残高を更新
     - Option2: balanceテーブルを作成、そこから値を取得

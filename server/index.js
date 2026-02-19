@@ -3,7 +3,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const knex = require('knex')(require('./knexfile').development);
+const knex = require('knex')(require('./knexfile')[process.env.NODE_ENV || 'development']);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,7 +12,9 @@ app.use(express.json());
 
 // Corsミドルウェアの設定
 app.use(cors({
-  origin: 'http://localhost:5173', 
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.CORS_ORIGIN  
+    : 'http://localhost:5173',
   credentials: true
 }));
 
@@ -183,6 +185,15 @@ app.get('/api/position', async (req, res) => {
     res.json({ error: 'Failed to fetch position' });
   }
 });
+
+// （見直し）本番環境：
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  });
+}
 
 //（見直し）定型フォーマット？
 // サーバー起動
