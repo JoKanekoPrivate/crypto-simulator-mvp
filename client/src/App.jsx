@@ -13,6 +13,7 @@ function App() {
   
   // Position関連
   const [isPositionVisible, setIsPositionVisible] = useState(false);
+  const [position, setPosition] = useState(null);
   
   // 2. イベントハンドラー
   const handleInputChange = (event) => {
@@ -183,13 +184,13 @@ function App() {
         <button onClick={() => setIsPositionVisible(!isPositionVisible)}>Show Position</button>
         {isPositionVisible && (
           <div>
-            <p>Average Cost: 0 JPY</p>
-            <p>Unrealized P/L: 0 JPY</p>
+            <p>Average Cost: ¥ {portfolio.averageCost}</p>
+            <p>Current Value: ¥ {portfolio.currentValue}</p>
+            <p>Profit/Loss: ¥ {portfolio.profitLoss}</p>
           </div>
         )}
       </div>
     </>
   );
-}
-
+};
 export default App
