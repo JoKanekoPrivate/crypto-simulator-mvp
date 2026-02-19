@@ -12,8 +12,9 @@
 - UIライブラリ：Mantine　（仮）
 
 # 開発手法
-> ⭐️は繰り返す
-> 🌀は見直し
+> ⭐️:繰り返す, 
+> 🌀:見直し,
+> 🎁:nice to have
 
 ### Day1
 1. 要件を確定する✅
@@ -34,7 +35,12 @@
 11. FE-BE-DB: Deal: FEに表示するDataをBE, DB, APIから所得する⭐️
 12. DB: キャッシュ用のSchemaを増やす？（要検討）
 
-
+### Day4
+13. Renderにデプロイ
+14. FE-BE-DB: Deal: バリデーション実装🎁
+    - Option1: traansactionsテーブルに残高を追加、Dealの度に残高を更新
+    - Option2: balanceテーブルを作成、そこから値を取得
+    - Now: 毎回usersのinitial_jpy_balanceとtransactionsのqtyとpriceから計算
 
 # 要件
 ## 何をするアプリか？
@@ -53,8 +59,8 @@
 ### 2. Buy（JPY → Crypto） or Sell（Crypto → JPY） が出来る（Deal）
   #### FE
   - BTC or ETHを指定（ETHは今回はドロップダウンのみ）
-  - <input>でnumberを入力
-  - <button>Buy</button> or <button>Sell</button>を指定
+  - <input></input>でnumberを入力
+  - <button>Buy</button> or <button>Sell</button>で指定
   - <Process>Nice Deal</Process>を表示
   #### BE
   - 
@@ -131,26 +137,47 @@ FB: 外部サービスの使用回数や使用量は抑えるのが基本！！
       </div>
     </>
 
-# FE-BE-DB: 
+# 整理2: FE-BE-DB: 
 ## Portfolio
 1. FE: 初回レンダリング
 1. BE: DBからGETメソッドで表示
 1. BE: 残高計算ロジックを使用して、transactionsとusersの値を計算
-1. BE: 値を返す
-1. FE: 表示
+1. BE: 計算結果を返す
+1. FE: Portfolioを表示
 
 ## Deal
 1. FE: ユーザーが数量を入力してBuy/Sellボタンをクリック
 1. FE: POSTメソッドでサーバーに取引データを送信
-1. BE: バリデーションを使用して、残高チェック
+1. BE: バリデーションを使用して、残高チェック🎁
 1. BE: CoinGecko APIで現在価格を取得
 1. BE: DBにtransactionレコードを挿入
 1. BE: 成功レスポンスを返す（statusだけで良いかも）
 1. FE: Portfolioを再取得して表示を更新
 
 ## Position
+1. FE: Show Positionボタンをクリック
+1. FE: クリックイベントでAPIを叩く
+1. BE: /api/positionエンドポイントでリクエストを受け取る
+1. BE: DBから取引履歴を取得
+1. BE: 損益計算ロジックを使用して、平均取得単価、評価額、損益を計算
+1. BE: CoinGecko APIで現在価格を取得
+1. BE: 計算結果を返す
+1. FE: Positionを表示
 
-## 
+#　反省点、学び
+- プロキシの設定に時間が掛かった → 経験を増やすしかない
+- 外部APIの読解に時間が掛かった → Swaggerにまとめる？
+    - パラメータ復習
+    - エラーコードは必ずどこかにまとまっている
+- HTMLタグ（JSX）の使いどころ → divとp以外も覚える
+- どのデータをどこから取るのかロジック設計の時点で明確にすべき → 書き出す？
+- DELETE要らないかも → 金融系でDBからDELETEするのことはなさそう？POSTで最新のdataから新たなdataをinsertする
+
+
+# 心掛け
+- 深追いしない（MVP!!）
+- 次につながるように気付きをメモする
+- Day毎のワークを残す（次回の工数見積もり用）
 
 # Utils
 - [GitHub Prefix](https://qiita.com/a_ya_ka/items/c472a02051d78e4c0855)
