@@ -32,12 +32,15 @@
 9. FE: 画面を作成する⭐️✅
 10. FE-BE-DB: Portfolio: FEに表示するDataをBE, DBから所得する⭐️✅
 ### Day3
-11. FE-BE-DB: Deal: FEに表示するDataをBE, DB, APIから所得する⭐️
-12. DB: キャッシュ用のSchemaを増やす？（要検討）
+11. FE-BE-DB: Deal: FEに表示するDataをBE, DB, APIから所得する⭐️✅
+12. FE-BE-DB: Position:  FEに表示するDataをBE, DB, APIから所得する⭐️✅
+13. DB: キャッシュ用のSchemaを増やす？（要検討）🎁
+14. CSS手をつける⭐️
+    - Mantineを使用
 
 ### Day4
-13. Renderにデプロイ
-14. FE-BE-DB: Deal: バリデーション実装🎁
+14. Renderにデプロイ
+15. FE-BE-DB: Deal: バリデーション実装🎁
     - Option1: traansactionsテーブルに残高を追加、Dealの度に残高を更新
     - Option2: balanceテーブルを作成、そこから値を取得
     - Now: 毎回usersのinitial_jpy_balanceとtransactionsのqtyとpriceから計算
@@ -172,6 +175,7 @@ FB: 外部サービスの使用回数や使用量は抑えるのが基本！！
 - HTMLタグ（JSX）の使いどころ → divとp以外も覚える
 - どのデータをどこから取るのかロジック設計の時点で明確にすべき → 書き出す？
 - DELETE要らないかも → 金融系でDBからDELETEするのことはなさそう？POSTで最新のdataから新たなdataをinsertする
+- DB重要（要件→DB設計もう少し時間かけても良いかも）
 
 
 # 心掛け

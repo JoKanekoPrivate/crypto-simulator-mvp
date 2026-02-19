@@ -128,6 +128,62 @@ app.post('/api/deal', async (req, res) => {
   }
 });
 
+// Position: ポジション情報を取得するエンドポイント
+app.get('/api/position', async (req, res) => {
+  try {
+    // 1. 取引履歴を取得
+    const transactions = await knex('transactions').where({ user_id: 1 });
+    // デバッグ
+    console.log('Transactions for Position:', transactions);
+
+    // 2. 損益計算ロジック
+    // total計算
+    let totalQty = 0;
+    let totalCost = 0;
+
+    transactions.forEach(transaction => {
+      const qty = parseFloat(transaction.qty);
+      const price = parseFloat(transaction.price);
+      
+      if (transaction.side === 'buy') {
+        totalQty += qty; 
+        totalCost += qty * price;
+      } else if (transaction.side === 'sell') {
+        totalQty -= qty; 
+        totalCost -= qty * price;
+      }
+    });
+
+    // 平均取得単価計算
+    let averageCost = 0;
+
+    if (totalQty === 0) {
+      averageCost = 0;
+    } else {
+      averageCost = totalCost / totalQty;
+    }
+
+    // 3. CoinGecko APIで現在価格を取得
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=jpy`
+    );
+    const data = await response.json();
+    const currentPrice = data.bitcoin.jpy;
+
+    // 4. レスポンス
+    res.status(200);
+    res.json({
+      averageCost: averageCost,
+      currentPrice: currentPrice,
+      profitLoss: (currentPrice - averageCost) * totalQty,
+    });
+
+  } catch (error) {
+    res.status(500);
+    res.json({ error: 'Failed to fetch position' });
+  }
+});
+
 //（見直し）定型フォーマット？
 // サーバー起動
 app.listen(PORT, () => {

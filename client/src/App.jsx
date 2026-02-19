@@ -85,6 +85,19 @@ function App() {
     }
   };
 
+  const handleShowPosition = async () => {
+    try {
+      const res = await fetch('/api/position');
+      const data = await res.json();
+      // // デバッグ
+      // console.log('Fetched position:', data);
+      setPosition(data);
+      setIsPositionVisible(!isPositionVisible);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   // 3. 副作用処理
   useEffect(() => {
       const fetchPortfolio = async () => {
@@ -181,12 +194,12 @@ function App() {
 
       <div>
         <h2>Position</h2>
-        <button onClick={() => setIsPositionVisible(!isPositionVisible)}>Show Position</button>
+        <button onClick={handleShowPosition}>Show Position</button>
         {isPositionVisible && (
           <div>
-            <p>Average Cost: ¥ {portfolio.averageCost}</p>
-            <p>Current Value: ¥ {portfolio.currentValue}</p>
-            <p>Profit/Loss: ¥ {portfolio.profitLoss}</p>
+            <p>Average Cost: ¥ {position.averageCost}</p>
+            <p>Current Value: ¥ {position.currentPrice}</p>
+            <p>Profit/Loss: ¥ {position.profitLoss}</p>
           </div>
         )}
       </div>
