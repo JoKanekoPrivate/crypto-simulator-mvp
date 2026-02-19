@@ -28,8 +28,10 @@ app.get('/api/test', (req, res) => {
 });
 
 // CoinGecko API: 暗号通貨の現在価格（JPY）を取得
+// パスパラメータでcoin_idを受信
 app.get('/api/price/:coin_id', async (req, res) => {
-  const { coin_id } = req.params; // 例: 'bitcoin'
+  // 想定: 'bitcoin'
+  const { coin_id } = req.params; 
   try {
     const response = await fetch(
       `https://api.coingecko.com/api/v3/simple/price?ids=${coin_id}&vs_currencies=jpy`
@@ -72,7 +74,8 @@ app.get('/api/portfolio', async (req, res) => {
       }
     });
 
-    // 4. レスポンス返却
+    // 4. レスポンス
+    res.status(200);
     res.json({
       jpyBalance: jpyBalance,
       btcBalance: btcBalance,
@@ -80,7 +83,48 @@ app.get('/api/portfolio', async (req, res) => {
 
   } catch (error) {
     res.status(500);
-    res.json({ error: 'Failed to fetch portfolio', details: error.message });
+    res.json({ error: 'Failed to fetch portfolio' });
+  }
+});
+
+// Deal: 取引実行エンドポイント
+app.post('/api/deal', async (req, res) => {
+  // デバッグ
+  console.log('Received deal request:', req.body);
+  // 想定: { coin_id: 'bitcoin', side: 'buy', qty: 0.1 }
+  const { coin_id, side, qty } = req.body; 
+  
+  try {
+    // 1. CoinGecko APIで現在価格を取得
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/simple/price?ids=${coin_id}&vs_currencies=jpy`
+    );
+    const data = await response.json();
+    const price = data[coin_id].jpy;
+
+    if (!price) {
+      res.status(400);
+      res.json({ error: 'Invalid coin_id or failed to fetch price' });
+      return;
+    }
+
+    // 2. DBに取引レコードを挿入
+    await knex('transactions').insert({
+      user_id: 1,
+      coin_id,
+      side,
+      qty,
+      price,
+      // treated_atは、DBのtimestampで自動設定する
+    });
+
+    // 3. レスポンス
+    res.status(200);
+    res.json({ message: 'Nice Deal!!' });
+
+  } catch (error) {
+    res.status(500);
+    res.json({ error: 'Failed to execute deal' });
   }
 });
 

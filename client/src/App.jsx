@@ -3,11 +3,86 @@ import './App.css'
 
 function App() {
   // 1. 状態管理
-  const [isPositionVisible, setIsPositionVisible] = useState(false);
+  // Portfolio関連
   const [portfolio, setPortfolio] = useState(null);
-
-  // 2. イベントハンドラー
   
+  // Deal関連
+  const [inputAmount, setInputAmount] = useState('');
+  const [isDealed, setIsDealed] = useState(false);
+  const [dealedMessage, setDealedMessage] = useState('');
+  
+  // Position関連
+  const [isPositionVisible, setIsPositionVisible] = useState(false);
+  
+  // 2. イベントハンドラー
+  const handleInputChange = (event) => {
+    setInputAmount(event.target.value);
+  };
+
+  const handleBuy = async () => {
+    try {
+      // リクエスト送信
+      const res = await fetch('/api/deal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+          {
+            // 今は固定でbitcoin
+            coin_id: 'bitcoin', 
+            side: 'buy',
+            // event.target.valueはstring型のためnumberに変換
+            qty: parseFloat(inputAmount),
+          }
+        ),
+      });
+
+      // レスポンス処理
+      const data = await res.json();
+      setIsDealed(true);
+      setDealedMessage(data.message);
+      
+      // ポートフォリオ更新
+      const portfolioRes = await fetch('/api/portfolio');
+      const portfolioData = await portfolioRes.json();
+      setPortfolio(portfolioData);
+
+    } catch (error) {
+      setIsDealed(true);
+      setDealedMessage('Failed to execute deal');
+      console.error('Error:', error);
+    }
+  };
+
+  const handleSell = async () => {
+    try {
+      // リクエスト送信
+      const res = await fetch('/api/deal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+          {
+            coin_id: 'bitcoin', 
+            side: 'sell',
+            qty: parseFloat(inputAmount),
+          }
+        ),
+      });
+
+      // レスポンス処理
+      const data = await res.json();
+      setIsDealed(true);
+      setDealedMessage(data.message);
+      // ポートフォリオ更新
+      const portfolioRes = await fetch('/api/portfolio');
+      const portfolioData = await portfolioRes.json();
+      setPortfolio(portfolioData);
+      
+    } catch (error) {
+      setIsDealed(true);
+      setDealedMessage('Failed to execute deal');
+      console.error('Error:', error);
+    }
+  };
 
   // 3. 副作用処理
   useEffect(() => {
@@ -24,6 +99,17 @@ function App() {
       };
       fetchPortfolio();
   }, [])
+
+  useEffect(() => {
+    if (isDealed) {
+      const timer = setTimeout(() => {
+        setIsDealed(false);
+        setDealedMessage('');
+      }, 3000);
+      // タイムアウトのクリーンアップ
+      return () => clearTimeout(timer);
+    }
+  }, [isDealed]);
 
   // /api/testエンドポイントからデータを取得
   // useEffect(() => {
@@ -59,7 +145,6 @@ function App() {
   //   fetchPrice();
   // }, []);
 
-
   // 4. 返り値構築
   return (
     <>
@@ -78,11 +163,19 @@ function App() {
 
       <div>
         <h2>Deal</h2>
-        <input placeholder="Enter amount"/>
+        <input 
+          type="number" 
+          value={inputAmount} 
+          onChange={handleInputChange} 
+          placeholder="Enter amount">
+        </input>
         <div>
-          <button>Buy</button>
-          <button>Sell</button>
+          <button onClick={handleBuy}>Buy</button>
+          <button onClick={handleSell}>Sell</button>
         </div>
+        {isDealed && (
+          <div>{dealedMessage}</div>
+        )}
       </div>
 
       <div>
