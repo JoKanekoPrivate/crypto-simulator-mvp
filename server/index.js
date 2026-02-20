@@ -1,5 +1,7 @@
 //（見直し）定型フォーマット？
-// ローカル環境の環境変数を読み込むための設定
+// dotenv: ローカル環境の場合、環境変数を.envファイルから読み込むためのライブラリ
+// （プロダクション環境では使われない）
+// ローカル環境の環境変数を読み込むための設定（config()の引数にpathを指定すれば、任意の.envファイルを読み込むことができる）
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -7,6 +9,9 @@ const knex = require('knex')(require('./knexfile')[process.env.NODE_ENV || 'deve
 const path = require('path');
 
 const app = express();
+// process.env: 環境変数を取得するためのオブジェクト
+// ローカル環境の場合：.envファイルから読み込まれる
+// プロダクション環境の場合：Renderの環境変数が読み込まれる
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
@@ -187,7 +192,13 @@ app.get('/api/position', async (req, res) => {
   }
 });
 
-// （見直し）本番環境：
+// （見直し）
+// 静的ファイルの提供
+// プロダクション環境：
+// - clientのビルドファイル（dist）を静的ファイルとして提供
+// 開発環境：
+// - npm run build実施済、開発サーバー（vite）がclientのビルドファイルを静的ファイルとして提供
+// - npm run build未実施、開発サーバー（vite）がビルドファイルは存在しないため、静的ファイル提供はスキップ（エラーは発生しない）
 app.use('/', express.static(path.join(__dirname, '../client/dist')));
 
 

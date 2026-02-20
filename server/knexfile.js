@@ -41,6 +41,7 @@ module.exports = {
 
   production: {
     client: 'postgresql',
+    // productionの場合は、hostやportなどの接続情報はDATABASE_URLに含まれている
     connection: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false },
     migrations: {
