@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import { Button, NumberInput, Text, Paper, Stack } from '@mantine/core';
 
 function App() {
   // 1. 状態管理
@@ -16,9 +17,10 @@ function App() {
   const [position, setPosition] = useState(null);
   
   // 2. イベントハンドラー
-  const handleInputChange = (event) => {
-    setInputAmount(event.target.value);
-  };
+  // mantineのNuberInputはonChangeに直接値を渡す
+  // const handleInputChange = (event) => {
+  //   setInputAmount(event.target.value);
+  // };
 
   const handleBuy = async () => {
     try {
@@ -163,46 +165,45 @@ function App() {
   return (
     <>
       <h1>Crypto Simulator</h1>
-      <div>
+      <Paper shadow="sm" padding="md" withBorder>
         <h2>Portfolio</h2>
         {portfolio ? (
-          <div>
-            <p>JPY Balance: ¥ {portfolio.jpyBalance}</p>
-            <p>BTC Balance: BTC {portfolio.btcBalance}</p>
-          </div>
+          <Stack>
+            <Text>JPY Balance: ¥ {portfolio.jpyBalance}</Text>
+            <Text>BTC Balance: BTC {portfolio.btcBalance}</Text>
+          </Stack>
         ) : (
-          <p>Loading portfolio...</p>
+          <Text>Loading portfolio...</Text>
         )}
-      </div>
+      </Paper>
 
-      <div>
+      <Paper shadow="sm" padding="md" withBorder>
         <h2>Deal</h2>
-        <input 
+        <NumberInput 
           type="number" 
-          value={inputAmount} 
-          onChange={handleInputChange} 
+          onChange={setInputAmount} 
           placeholder="Enter amount">
-        </input>
-        <div>
-          <button onClick={handleBuy}>Buy</button>
-          <button onClick={handleSell}>Sell</button>
-        </div>
+        </NumberInput>
+        <Stack>
+          <Button onClick={handleBuy}>Buy</Button>
+          <Button onClick={handleSell}>Sell</Button>
+        </Stack>
         {isDealed && (
           <div>{dealedMessage}</div>
         )}
-      </div>
+      </Paper>
 
-      <div>
+      <Paper shadow="sm" padding="md" withBorder>
         <h2>Position</h2>
-        <button onClick={handleShowPosition}>Show Position</button>
+        <Button onClick={handleShowPosition}>Show Position</Button>
         {isPositionVisible && (
-          <div>
-            <p>Average Cost: ¥ {position.averageCost}</p>
-            <p>Current Value: ¥ {position.currentPrice}</p>
-            <p>Profit/Loss: ¥ {position.profitLoss}</p>
-          </div>
+          <Stack>
+            <Text>Average Cost: ¥ {position.averageCost}</Text>
+            <Text>Current Value: ¥ {position.currentPrice}</Text>
+            <Text>Profit/Loss: ¥ {position.profitLoss}</Text>
+          </Stack>
         )}
-      </div>
+      </Paper>
     </>
   );
 };
