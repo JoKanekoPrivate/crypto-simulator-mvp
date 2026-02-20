@@ -35,13 +35,14 @@
 11. FE-BE-DB: Deal: FEに表示するDataをBE, DB, APIから所得する⭐️✅
 12. FE-BE-DB: Position:  FEに表示するDataをBE, DB, APIから所得する⭐️✅
 13. DB: キャッシュ用のSchemaを増やす？（要検討）🎁
-14. CSS手をつける⭐️
-    - 別ブランチで試す
-    - Mantineを使用
+
 
 ### Day4
-14. Renderにデプロイ🌀
-15. FE-BE-DB: Deal: バリデーション実装🎁
+14. Renderにデプロイ⭐️🌀
+15. CSS手をつける⭐️
+    - 別ブランチで試す
+    - Mantineを使用
+16. FE-BE-DB: Deal: バリデーション実装🎁
     - Option1: traansactionsテーブルに残高を追加、Dealの度に残高を更新
     - Option2: balanceテーブルを作成、そこから値を取得
     - Now: 毎回usersのinitial_jpy_balanceとtransactionsのqtyとpriceから計算
