@@ -188,13 +188,8 @@ app.get('/api/position', async (req, res) => {
 });
 
 // （見直し）本番環境：
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist')));
-  
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-  });
-}
+app.use('/', express.static(path.join(__dirname, '../client/dist')));
+
 
 //（見直し）定型フォーマット？
 // サーバー起動
