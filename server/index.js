@@ -20,9 +20,9 @@ app.use(cors({
 }));
 
 // ルートエンドポイント
-app.get('/', (req, res) => {
-  res.json({ message: 'Hello Root' });
-});
+// app.get('/', (req, res) => {
+//   res.json({ message: 'Hello Root' });
+// });
 //（見直し）定型フォーマット？
 
 // テスト用エンドポイント
