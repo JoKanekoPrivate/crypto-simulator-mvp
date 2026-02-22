@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import './App.css'
-import { Button, NumberInput, Text, Paper, Stack } from '@mantine/core';
+import { Button, NumberInput, Text, Paper, Stack, Title, Group, Container } from '@mantine/core';
 
 function App() {
   // 1. 状態管理
@@ -163,48 +162,59 @@ function App() {
 
   // 4. 返り値構築
   return (
-    <>
-      <h1>Crypto Simulator</h1>
+    <Container size="md" my="md">
+      <Title c='primary' ta="center" mb="md">Crypto Simulator</Title>
+
+      <Stack gap="sm" >
       <Paper shadow="sm" padding="md" withBorder>
-        <h2>Portfolio</h2>
+        <Title order={2} c="primary" ta="center" mb="md">Portfolio</Title>
+        <Paper shadow="xs" padding="sm" withBorder>
         {portfolio ? (
           <Stack>
-            <Text>JPY Balance: ¥ {portfolio.jpyBalance}</Text>
-            <Text>BTC Balance: BTC {portfolio.btcBalance}</Text>
+            <Text ta="center">JPY Balance: ¥ {portfolio.jpyBalance}</Text>
+            <Text ta="center">BTC Balance: BTC {portfolio.btcBalance}</Text>
           </Stack>
         ) : (
-          <Text>Loading portfolio...</Text>
+          <Text ta="center">Loading portfolio...</Text>
         )}
+        </Paper>
       </Paper>
 
       <Paper shadow="sm" padding="md" withBorder>
-        <h2>Deal</h2>
+        <Title order={2} c="primary" ta="center" mb="md">Deal</Title>
         <NumberInput 
           type="number" 
           onChange={setInputAmount} 
-          placeholder="Enter amount">
+          placeholder="Enter amount"
+          maw={300}
+          mx="auto">
         </NumberInput>
-        <Stack>
+        <Group mt="md" justify="center">
           <Button onClick={handleBuy}>Buy</Button>
           <Button onClick={handleSell}>Sell</Button>
-        </Stack>
+        </Group>
         {isDealed && (
-          <div>{dealedMessage}</div>
+          <Text ta="center">{dealedMessage}</Text>
         )}
       </Paper>
 
       <Paper shadow="sm" padding="md" withBorder>
-        <h2>Position</h2>
-        <Button onClick={handleShowPosition}>Show Position</Button>
+        <Title order={2} c="primary" ta="center" mb="md">Position</Title>
+        <Group mt="md" justify="center">
+          <Button onClick={handleShowPosition}>Show Position</Button>
+        </Group>
+        <Paper shadow="xs" padding="sm" withBorder>
         {isPositionVisible && (
           <Stack>
-            <Text>Average Cost: ¥ {position.averageCost}</Text>
-            <Text>Current Value: ¥ {position.currentPrice}</Text>
-            <Text>Profit/Loss: ¥ {position.profitLoss}</Text>
+            <Text ta="center">Average Cost: ¥ {position.averageCost}</Text>
+            <Text ta="center">Current Value: ¥ {position.currentPrice}</Text>
+            <Text ta="center">Profit/Loss: ¥ {position.profitLoss}</Text>
           </Stack>
         )}
+        </Paper>
       </Paper>
-    </>
+      </Stack>
+    </Container>
   );
 };
 export default App

@@ -1,0 +1,4 @@
+/* ボタンホバースタイル */
+button.mantine-Button-root:hover:not([data-disabled]) {
+  background-color: #DEB16C !important;
+}
