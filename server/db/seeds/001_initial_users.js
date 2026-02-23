@@ -3,6 +3,7 @@
  * @returns { Promise<void> } 
  */
 exports.seed = async function(knex) {
+  await knex('transactions').del(); //本来はtransactionsで別のseedファイルを作るべきだが、今回は省略
   await knex('users').del();
 
   // 初期ユーザーをinsert（1000,000円）
