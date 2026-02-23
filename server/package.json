@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build":"cd ../client && npm install && npm run build",
-    "render-build": "npm install && npm run build"
+    "render-build": "npm install && npm run build && npx knex migrate:latest"
   },
   "keywords": [],
   "author": "",
