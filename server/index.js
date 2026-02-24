@@ -110,12 +110,14 @@ app.post('/api/deal', async (req, res) => {
     const data = await response.json();
     const price = data[coin_id].jpy;
 
+    console.log('***********:', price);
     if (!price) {
       res.status(400);
       res.json({ error: 'Invalid coin_id or failed to fetch price' });
       return;
     }
 
+    console.log('!!!!!!!!!!!!!:', price);
     // 2. DBに取引レコードを挿入
     await knex('transactions').insert({
       user_id: 1,
