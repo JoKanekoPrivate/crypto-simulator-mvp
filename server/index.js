@@ -109,7 +109,8 @@ app.post('/api/deal', async (req, res) => {
       `https://api.coingecko.com/api/v3/simple/price?ids=${coin_id}&vs_currencies=jpy`
     );
     const data = await response.json();
-    const price = data[coin_id].jpy;
+    console.log('????:', data);
+    const price = data[coin_id]?.jpy;
 
     console.log('***********:', price);
     if (!price) {
