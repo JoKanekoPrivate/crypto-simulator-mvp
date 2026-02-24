@@ -1,6 +1,7 @@
 import { Text, Paper, Stack, Title } from "@mantine/core";
 
 export function Portfolio({ portfolio }) {
+  // 4. 返り値構築
   return (
     <Paper shadow="sm" padding="md" withBorder>
       <Title order={2} c="primary" ta="center" mb="md">

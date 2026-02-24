@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react'
 import { Button, NumberInput, Text, Paper, Stack, Title, Group, Container } from '@mantine/core';
-import {Portfolio} from './components/Portfolio';
+import { Portfolio } from './components/Portfolio';
+import { Position } from './components/Position';
 
 function App() {
   // 1. 状態管理
   // Portfolio関連
   const [portfolio, setPortfolio] = useState(null);
-  
+
   // Deal関連（コンポーネントに分割）
-  const [inputAmount, setInputAmount] = useState('');
+  const [inputAmount, setInputAmount] = useState("");
   const [isDealed, setIsDealed] = useState(false);
-  const [dealedMessage, setDealedMessage] = useState('');
-  
-  // Position関連
-  const [isPositionVisible, setIsPositionVisible] = useState(false);
-  const [position, setPosition] = useState(null);
-  
+  const [dealedMessage, setDealedMessage] = useState("");
+
+  // // Position関連（コンポーネントに分割）
+  // const [isPositionVisible, setIsPositionVisible] = useState(false);
+  // const [position, setPosition] = useState(null);
+
   // 2. イベントハンドラー
   // mantineのNuberInputはonChangeに直接値を渡す
   // const handleInputChange = (event) => {
@@ -25,50 +26,45 @@ function App() {
   const handleBuy = async () => {
     try {
       // リクエスト送信
-      const res = await fetch('/api/deal', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(
-          {
-            // 今は固定でbitcoin
-            coin_id: 'bitcoin', 
-            side: 'buy',
-            // event.target.valueはstring型のためnumberに変換
-            qty: parseFloat(inputAmount),
-          }
-        ),
+      const res = await fetch("/api/deal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          // 今は固定でbitcoin
+          coin_id: "bitcoin",
+          side: "buy",
+          // event.target.valueはstring型のためnumberに変換
+          qty: parseFloat(inputAmount),
+        }),
       });
 
       // レスポンス処理
       const data = await res.json();
       setIsDealed(true);
       setDealedMessage(data.message);
-      
+
       // ポートフォリオ更新
-      const portfolioRes = await fetch('/api/portfolio');
+      const portfolioRes = await fetch("/api/portfolio");
       const portfolioData = await portfolioRes.json();
       setPortfolio(portfolioData);
-
     } catch (error) {
       setIsDealed(true);
-      setDealedMessage('Failed to execute deal');
-      console.error('Error:', error);
+      setDealedMessage("Failed to execute deal");
+      console.error("Error:", error);
     }
   };
 
   const handleSell = async () => {
     try {
       // リクエスト送信
-      const res = await fetch('/api/deal', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(
-          {
-            coin_id: 'bitcoin', 
-            side: 'sell',
-            qty: parseFloat(inputAmount),
-          }
-        ),
+      const res = await fetch("/api/deal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          coin_id: "bitcoin",
+          side: "sell",
+          qty: parseFloat(inputAmount),
+        }),
       });
 
       // レスポンス処理
@@ -76,49 +72,49 @@ function App() {
       setIsDealed(true);
       setDealedMessage(data.message);
       // ポートフォリオ更新
-      const portfolioRes = await fetch('/api/portfolio');
+      const portfolioRes = await fetch("/api/portfolio");
       const portfolioData = await portfolioRes.json();
       setPortfolio(portfolioData);
-      
     } catch (error) {
       setIsDealed(true);
-      setDealedMessage('Failed to execute deal');
-      console.error('Error:', error);
+      setDealedMessage("Failed to execute deal");
+      console.error("Error:", error);
     }
   };
 
-  const handleShowPosition = async () => {
-    try {
-      const res = await fetch('/api/position');
-      const data = await res.json();
-      setPosition(data);
-      setIsPositionVisible(!isPositionVisible);
-    } catch (error) {
-      console.error('Error', error);
-    }
-  };
+  // (コンポーネントに分割)
+  // const handleShowPosition = async () => {
+  //   try {
+  //     const res = await fetch("/api/position");
+  //     const data = await res.json();
+  //     setPosition(data);
+  //     setIsPositionVisible(!isPositionVisible);
+  //   } catch (error) {
+  //     console.error("Error", error);
+  //   }
+  // };
 
   // 3. 副作用処理
   useEffect(() => {
-      const fetchPortfolio = async () => {
-        try {
-          const res = await fetch('/api/portfolio');
-          const data = await res.json();
-          // // デバッグ
-          // console.log('Fetched portfolio:', data);
-          setPortfolio(data);
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      };
-      fetchPortfolio();
-  }, [])
+    const fetchPortfolio = async () => {
+      try {
+        const res = await fetch("/api/portfolio");
+        const data = await res.json();
+        // // デバッグ
+        // console.log('Fetched portfolio:', data);
+        setPortfolio(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    fetchPortfolio();
+  }, []);
 
   useEffect(() => {
     if (isDealed) {
       const timer = setTimeout(() => {
         setIsDealed(false);
-        setDealedMessage('');
+        setDealedMessage("");
       }, 3000);
       // タイムアウトのクリーンアップ
       return () => clearTimeout(timer);
@@ -162,44 +158,32 @@ function App() {
   // 4. 返り値構築
   return (
     <Container size="md" my="md">
-      <Title c='primary' ta="center" mb="md">Crypto Simulator</Title>
+      <Title c="primary" ta="center" mb="md">
+        Crypto Simulator
+      </Title>
 
-      <Stack gap="sm" >
-      <Portfolio portfolio={portfolio} />
+      <Stack gap="sm">
+        <Portfolio portfolio={portfolio} />
 
-      <Paper shadow="sm" padding="md" withBorder>
-        <Title order={2} c="primary" ta="center" mb="md">Deal</Title>
-        <NumberInput 
-          type="number" 
-          onChange={setInputAmount} 
-          placeholder="Enter amount"
-          maw={300}
-          mx="auto">
-        </NumberInput>
-        <Group mt="md" justify="center">
-          <Button onClick={handleBuy}>Buy</Button>
-          <Button onClick={handleSell}>Sell</Button>
-        </Group>
-        {isDealed && (
-          <Text ta="center">{dealedMessage}</Text>
-        )}
-      </Paper>
-
-      <Paper shadow="sm" padding="md" withBorder>
-        <Title order={2} c="primary" ta="center" mb="md">Position</Title>
-        <Group mt="md" justify="center">
-          <Button onClick={handleShowPosition}>Show Position</Button>
-        </Group>
-        <Paper shadow="xs" padding="sm" withBorder>
-        {isPositionVisible && (
-          <Stack>
-            {/* <Text ta="center">Average Cost: ¥ {position.averageCost}</Text> */}
-            <Text ta="center">Current Value: ¥ {position.currentValue}</Text>
-            <Text ta="center">Profit/Loss: ¥ {position.profitLoss}</Text>
-          </Stack>
-        )}
+        <Paper shadow="sm" padding="md" withBorder>
+          <Title order={2} c="primary" ta="center" mb="md">
+            Deal
+          </Title>
+          <NumberInput
+            type="number"
+            onChange={setInputAmount}
+            placeholder="Enter amount"
+            maw={300}
+            mx="auto"
+          ></NumberInput>
+          <Group mt="md" justify="center">
+            <Button onClick={handleBuy}>Buy</Button>
+            <Button onClick={handleSell}>Sell</Button>
+          </Group>
+          {isDealed && <Text ta="center">{dealedMessage}</Text>}
         </Paper>
-      </Paper>
+
+        <Position />
       </Stack>
     </Container>
   );
