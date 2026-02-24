@@ -6,6 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "db:migrate": "npx knex migrate:latest",
+    "db:seed": "npx knex seed:run",
     "build":"cd ../client && npm install && npm run build",
     "render-build": "npm install && npm run build && npx knex migrate:latest && npx knex seed:run"
   },
