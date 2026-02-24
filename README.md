@@ -32,7 +32,7 @@ npm run dev
 cd client
 npm install
 ```
-## 1-4. クライアント起動
+## 2-2. クライアント起動
 ```terminal
 npm run dev
 ```
