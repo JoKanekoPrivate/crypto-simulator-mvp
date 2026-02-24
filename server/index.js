@@ -85,8 +85,8 @@ app.get('/api/portfolio', async (req, res) => {
     // 4. レスポンス
     res.status(200);
     res.json({
-      jpyBalance: jpyBalance,
-      btcBalance: btcBalance,
+      jpyBalance: Math.round(jpyBalance * 100) / 100,
+      btcBalance: Math.round(btcBalance * 100000000) / 100000000,
     });
 
   } catch (error) {
@@ -146,29 +146,30 @@ app.get('/api/position', async (req, res) => {
 
     // 2. 損益計算ロジック
     // total計算
-    let totalQty = 0;
-    let totalCost = 0;
+    let totalBuyQty = 0;
+    let totalBuyCost = 0;
+    let currentQty = 0;
 
     transactions.forEach(transaction => {
       const qty = parseFloat(transaction.qty);
       const price = parseFloat(transaction.price);
       
       if (transaction.side === 'buy') {
-        totalQty += qty; 
-        totalCost += qty * price;
+        totalBuyQty += qty; 
+        totalBuyCost += qty * price;
+        currentQty += qty;
       } else if (transaction.side === 'sell') {
-        totalQty -= qty; 
-        totalCost -= qty * price;
+        currentQty -= qty;
       }
     });
 
     // 平均取得単価計算
     let averageCost = 0;
 
-    if (totalQty === 0) {
+    if (totalBuyQty <= 0) {
       averageCost = 0;
     } else {
-      averageCost = totalCost / totalQty;
+      averageCost = totalBuyCost / totalBuyQty;
     }
 
     // 3. CoinGecko APIで現在価格を取得
@@ -176,14 +177,16 @@ app.get('/api/position', async (req, res) => {
       `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=jpy`
     );
     const data = await response.json();
-    const currentPrice = data.bitcoin.jpy;
+    const currentValue = data.bitcoin.jpy * currentQty;
+
+    const profitLoss = currentValue - (averageCost * currentQty);
 
     // 4. レスポンス
     res.status(200);
     res.json({
       averageCost: averageCost,
-      currentPrice: currentPrice,
-      profitLoss: (currentPrice - averageCost) * totalQty,
+      currentValue: Math.round(currentValue * 100) / 100,
+      profitLoss: Math.round(profitLoss * 100) / 100,
     });
 
   } catch (error) {

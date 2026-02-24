@@ -51,7 +51,7 @@ function App() {
     } catch (error) {
       setIsDealed(true);
       setDealedMessage('Failed to execute deal');
-      console.error('Error details:', error);
+      console.error('Error:', error);
     }
   };
 
@@ -95,7 +95,7 @@ function App() {
       setPosition(data);
       setIsPositionVisible(!isPositionVisible);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error', error);
     }
   };
 
@@ -109,7 +109,7 @@ function App() {
           // console.log('Fetched portfolio:', data);
           setPortfolio(data);
         } catch (error) {
-          console.error('Error fetching portfolio:', error);
+          console.error('Error:', error);
         }
       };
       fetchPortfolio();
@@ -206,8 +206,8 @@ function App() {
         <Paper shadow="xs" padding="sm" withBorder>
         {isPositionVisible && (
           <Stack>
-            <Text ta="center">Average Cost: ¥ {position.averageCost}</Text>
-            <Text ta="center">Current Value: ¥ {position.currentPrice}</Text>
+            {/* <Text ta="center">Average Cost: ¥ {position.averageCost}</Text> */}
+            <Text ta="center">Current Value: ¥ {position.currentValue}</Text>
             <Text ta="center">Profit/Loss: ¥ {position.profitLoss}</Text>
           </Stack>
         )}
