@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Button, NumberInput, Text, Paper, Stack, Title, Group, Container } from '@mantine/core';
+import {Portfolio} from './components/Portfolio';
 
 function App() {
   // 1. 状態管理
   // Portfolio関連
   const [portfolio, setPortfolio] = useState(null);
   
-  // Deal関連
+  // Deal関連（コンポーネントに分割）
   const [inputAmount, setInputAmount] = useState('');
   const [isDealed, setIsDealed] = useState(false);
   const [dealedMessage, setDealedMessage] = useState('');
@@ -164,19 +165,7 @@ function App() {
       <Title c='primary' ta="center" mb="md">Crypto Simulator</Title>
 
       <Stack gap="sm" >
-      <Paper shadow="sm" padding="md" withBorder>
-        <Title order={2} c="primary" ta="center" mb="md">Portfolio</Title>
-        <Paper shadow="xs" padding="sm" withBorder>
-        {portfolio ? (
-          <Stack>
-            <Text ta="center">JPY Balance: ¥ {portfolio.jpyBalance}</Text>
-            <Text ta="center">BTC Balance: BTC {portfolio.btcBalance}</Text>
-          </Stack>
-        ) : (
-          <Text ta="center">Loading portfolio...</Text>
-        )}
-        </Paper>
-      </Paper>
+      <Portfolio portfolio={portfolio} />
 
       <Paper shadow="sm" padding="md" withBorder>
         <Title order={2} c="primary" ta="center" mb="md">Deal</Title>
