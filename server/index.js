@@ -48,7 +48,7 @@ app.get('/api/price/:coin_id', async (req, res) => {
     res.json(data);
   } catch (error) {
     res.status(500);
-    res.json({ error: 'Failed to fetch price from CoinGecko' });
+    res.json({ error: 'Failed to fetch price from CoinGecko', details: error.message });
   }
 });
 
@@ -91,7 +91,7 @@ app.get('/api/portfolio', async (req, res) => {
 
   } catch (error) {
     res.status(500);
-    res.json({ error: 'Failed to fetch portfolio' });
+    res.json({ error: 'Failed to fetch portfolio', details: error.message });
   }
 });
 
@@ -132,7 +132,7 @@ app.post('/api/deal', async (req, res) => {
 
   } catch (error) {
     res.status(500);
-    res.json({ error: 'Failed to execute deal' });
+    res.json({ error: 'Failed to execute deal', details: error.message });
   }
 });
 

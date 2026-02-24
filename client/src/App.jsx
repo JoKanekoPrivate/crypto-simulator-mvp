@@ -51,7 +51,7 @@ function App() {
     } catch (error) {
       setIsDealed(true);
       setDealedMessage('Failed to execute deal');
-      console.error('Error:', error);
+      console.error('Error details:', error);
     }
   };
 

@@ -35,20 +35,22 @@
 11. FE-BE-DB: Deal: FEに表示するDataをBE, DB, APIから所得する⭐️✅
 12. FE-BE-DB: Position:  FEに表示するDataをBE, DB, APIから所得する⭐️✅
 13. DB: キャッシュ用のSchemaを増やす？（要検討）🎁
-
-
 ### Day4
 14. Renderにデプロイ⭐️🌀✅
 15. CSS⭐️✅
     - 別ブランチで試す
     - Mantineを使用
-
 ### Day5
-16. Themeカラーを作成
-16. FE-BE-DB: Deal: バリデーション実装🎁
+16. Themeカラーを作成⭐️✅
+17. FE-BE-DB: Deal: バリデーション実装🎁
     - Option1: traansactionsテーブルに残高を追加、Dealの度に残高を更新
     - Option2: balanceテーブルを作成、そこから値を取得
     - Now: 毎回usersのinitial_jpy_balanceとtransactionsのqtyとpriceから計算
+
+### Day6
+19. ReadNeを本番用に再編集
+18. プレゼ準備
+
 
 # 要件
 ## 何をするアプリか？
@@ -177,10 +179,12 @@ FB: 外部サービスの使用回数や使用量は抑えるのが基本！！
 - 外部APIの読解に時間が掛かった → Swaggerにまとめる？
     - パラメータ復習
     - エラーコードは必ずどこかにまとまっている
+    - 制限を理解する（外部サービスの制限は受け入れるしかない）
 - HTMLタグ（JSX）の使いどころ → divとp以外も覚える
 - どのデータをどこから取るのかロジック設計の時点で明確にすべき → 書き出す？
 - DELETE要らないかも → 金融系でDBからDELETEするのことはなさそう？POSTで最新のdataから新たなdataをinsertする
 - DB重要（要件→DB設計もう少し時間かけても良いかも）
+- デモ用の初期データも定義すべきだった
 
 
 # 心掛け
