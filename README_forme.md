@@ -7,9 +7,11 @@
 - デプロイ：Render
 - テスト：vitest, react-testing-library　（仮）
 - 外部API：CoinGecko（https://docs.coingecko.com/）
-  - 参考: 公式: https://docs.coingecko.com/v3.0.1/reference/endpoint-overview?utm_source=chatgpt.com
+  - API公式: https://docs.coingecko.com/v3.0.1/reference/endpoint-overview?utm_source=chatgpt.com
 - グラフ: Recharts（https://recharts.github.io/）　（仮）
-- UIライブラリ：Mantine　（仮）
+- UIライブラリ：Mantine
+- ページネーション: React-Router
+- 認証: Firebase Authentication
 
 # 開発手法
 > ⭐️:繰り返す, 
@@ -46,11 +48,16 @@
     - Option1: traansactionsテーブルに残高を追加、Dealの度に残高を更新
     - Option2: balanceテーブルを作成、そこから値を取得
     - Now: 毎回usersのinitial_jpy_balanceとtransactionsのqtyとpriceから計算
-
 ### Day6
-19. ReadNeを本番用に再編集
-18. プレゼ準備
+19. ReadMeを本番用に再編集✅
+18. プレゼン準備✅
 
+### Day7以降（個人）
+1. FE: コンポーネント分割（App→App, Portfolio, Deal, Position）
+1. FE: ページ分割（App→/, dashboard, login）
+1. FE: react-router
+1. Firebaseのインストール
+1. サーバー側の認証
 
 # 要件
 ## 何をするアプリか？
