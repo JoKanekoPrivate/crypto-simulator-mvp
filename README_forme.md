@@ -54,7 +54,7 @@
 
 ### Day7以降（個人）
 1. FE: コンポーネント分割（App→App, Portfolio, Deal, Position）
-1. FE: ページ分割（App→/, dashboard, login）
+1. FE: ページ分割（App→Home, Dashboard, Login）
 1. FE: react-router
 1. Firebaseのインストール
 1. サーバー側の認証
