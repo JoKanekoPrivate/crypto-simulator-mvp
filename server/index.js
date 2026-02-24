@@ -102,7 +102,8 @@ app.post('/api/deal', async (req, res) => {
   // 想定: { coin_id: 'bitcoin', side: 'buy', qty: 0.1 }
   const { coin_id, side, qty } = req.body; 
   
-  try {
+  // try {
+    console.log('----------:', req.body);
     // 1. CoinGecko APIで現在価格を取得
     const response = await fetch(
       `https://api.coingecko.com/api/v3/simple/price?ids=${coin_id}&vs_currencies=jpy`
@@ -132,10 +133,10 @@ app.post('/api/deal', async (req, res) => {
     res.status(200);
     res.json({ message: 'Nice Deal!!' });
 
-  } catch (error) {
-    res.status(500);
-    res.json({ error: 'Failed to execute deal', details: error.message });
-  }
+  // } catch (error) {
+  //   res.status(500);
+  //   res.json({ error: 'Failed to execute deal', details: error.message });
+  // }
 });
 
 // Position: ポジション情報を取得するエンドポイント
