@@ -90,8 +90,6 @@ function App() {
     try {
       const res = await fetch('/api/position');
       const data = await res.json();
-      // // デバッグ
-      // console.log('Fetched position:', data);
       setPosition(data);
       setIsPositionVisible(!isPositionVisible);
     } catch (error) {

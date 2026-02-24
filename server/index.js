@@ -141,8 +141,8 @@ app.get('/api/position', async (req, res) => {
   try {
     // 1. 取引履歴を取得
     const transactions = await knex('transactions').where({ user_id: 1 });
-    // デバッグ
-    console.log('Transactions for Position:', transactions);
+    // // デバッグ
+    // console.log('Transactions for Position:', transactions);
 
     // 2. 損益計算ロジック
     // total計算
@@ -176,6 +176,16 @@ app.get('/api/position', async (req, res) => {
     const response = await fetch(
       `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=jpy`
     );
+
+    // デバック
+    if(!response.ok) {
+      console.error('Failed to fetch from CoinGecko:', response.statusText, response.status);
+      return res.status(response.status).json({ 
+        error: 'Failed to fetch from CoinGecko', 
+        details: response.statusText 
+      });
+    }
+
     const data = await response.json();
     const currentValue = data.bitcoin.jpy * currentQty;
 
